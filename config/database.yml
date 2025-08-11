@@ -81,10 +81,11 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    host: <%= ENV["DB_HOST"] %>
+    host: beyonder-postgres
+    port: 5432
     database: beyonder_production
     username: beyonder
-    password: <%= ENV["DB_PASSWORD"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: beyonder_production_cache
