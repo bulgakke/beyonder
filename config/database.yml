@@ -81,9 +81,10 @@ test:
 production:
   primary: &primary_production
     <<: *default
+    host: <%= ENV["DB_HOST"] %>
     database: beyonder_production
     username: beyonder
-    password: <%= ENV["BEYONDER_DATABASE_PASSWORD"] %>
+    password: <%= ENV["DB_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: beyonder_production_cache
