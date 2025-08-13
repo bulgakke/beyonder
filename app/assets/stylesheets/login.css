@@ -1,0 +1,56 @@
+.login-container {
+  width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.tabs {
+  display: flex;
+}
+
+.tab {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px 12px 0 0;
+  transition: all 0.4s ease;
+  color: white;
+}
+
+.tab-wrapper {
+  text-align: center;
+  flex: 1;
+  border-radius: 12px 12px 0 0;
+}
+
+.sign-up-tab {
+  background-color: #3498db;
+}
+
+.sign-in-tab {
+  background-color: #2ecc71;
+}
+
+.quick-login-tab {
+  background-color: #e74c3c;
+}
+
+.tab:hover {
+  transform: translateY(-4px);
+  transition: all 0.2s ease;
+}
+
+.tab.active {
+  transform: translateY(-10px);
+  box-shadow: 0 -4px 6px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+
+.forms {
+  padding: 20px;
+  border-radius: 0 0 12px 12px;
+  transition: all 0.3s ease;
+}
