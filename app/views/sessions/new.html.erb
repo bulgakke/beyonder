@@ -1,3 +1,11 @@
+<% if alert = flash[:alert] %>
+  <p class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-lg inline-block" id="alert"><%= alert %></p>
+<% end %>
+
+<% if notice = flash[:notice] %>
+  <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+<% end %>
+
 <div data-controller="login-tabs" class="login-container" data-login-tabs-target="container">
   <div class="tabs">
     <div class="tab-wrapper sign-up-tab">
@@ -13,7 +21,7 @@
         data-login-tabs-target="tab"
         data-action="login-tabs#switchTab"
         data-tab="sign-in"
-        class="tab sign-in-tab">
+        class="tab sign-in-tab active">
         Log in
       </button>
     </div>
@@ -28,12 +36,12 @@
     </div>
   </div>
 
-  <div data-login-tabs-target="forms" class="forms">
+  <div data-login-tabs-target="forms" class="forms sign-in-tab">
     <%= turbo_frame_tag "sign-up-form", class: "form sign-up-form hidden" do %>
       <%= render "sign_up_form" %>
     <% end %>
 
-    <%= turbo_frame_tag "sign-in-form", class: "form sign-in-form hidden" do %>
+    <%= turbo_frame_tag "sign-in-form", class: "form sign-in-form" do %>
       <%= render "sign_in_form" %>
     <% end %>
 
