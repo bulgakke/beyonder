@@ -26,6 +26,10 @@
   border-radius: 12px 12px 0 0;
 }
 
+.tab-wrapper.sign-in-tab {
+  margin-inline: 3px;
+}
+
 .sign-up-tab {
   background-color: #3498db;
 }
