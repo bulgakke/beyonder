@@ -1,26 +1,15 @@
-<nav class="navbar rounded-box shadow-base-300/20 shadow-sm">
-  <div class="w-full md:flex md:items-center md:gap-2">
-    <div class="flex items-center justify-between">
-      <div class="navbar-start items-center justify-between max-md:w-full">
-        <div class="size-20">
-          <%= link_to root_path do %>
-            <%= image_tag('/icon.svg', size: "300x300") %>
-          <% end %>
-        </div>
-        <%# <div class="md:hidden"> %>
-          <button type="button" class="collapse-toggle btn btn-outline btn-secondary btn-sm btn-square" data-collapse="#logo-navbar-collapse" aria-controls="logo-navbar-collapse" aria-label="Toggle navigation" >
-            <span class="icon-[tabler--menu-2] collapse-open:hidden size-4"></span>
-            <span class="icon-[tabler--x] collapse-open:block hidden size-4"></span>
-          </button>
-        <%# </div> %>
-      </div>
-    </div>
-    <div id="logo-navbar-collapse" class="md:navbar-end collapse hidden grow basis-full overflow-hidden transition-[height] duration-300 max-md:w-full" >
-      <ul class="menu md:menu-horizontal gap-2 p-0 text-base max-md:mt-2">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Careers</a></li>
-      </ul>
-    </div>
+<nav class="bg-gradient-to-br from-blue-500 via-indigo-400 to-violet-500 flex justify-start">
+  <div class="hover:bg-teal-400">
+    <%= link_to root_path do %>
+      <%= inline_svg_tag('icon.svg', class: "hover:-rotate-16 transition-all duration-300 size-15 p-1") %>
+    <% end %>
+  </div>
+  <div class="hover:bg-emerald-300 ml-auto">
+    <%= link_to "https://github.com/bulgakke/beyonder" do %>
+      <%= image_tag('github-mark-white.svg', class: "hover:invert size-14 p-3") %>
+    <% end %>
+  </div>
+  <div class="text-white p-3 pt-4 hover:text-black hover:bg-emerald-300 transition-all duration-300 mr-10">
+    <%= link_to "login", new_session_path %>
   </div>
 </nav>
