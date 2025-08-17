@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
-  allow_unauthenticated_access only: %i[new create]
+  allow_unauthenticated_access only: %i[create]
 
-  def new
+  before_action :set_user, only: %i[show]
+
+  def show
   end
 
   def create
@@ -9,6 +11,7 @@ class UsersController < ApplicationController
 
     if @user.save
       start_new_session_for @user
+      redirect_to after_authentication_url, notice: "Logged in as #{user.username}"
     else
       render :new, status: :unprocessable_entity
     end
@@ -18,7 +21,13 @@ class UsersController < ApplicationController
     if params[:email].present?
       params.permit(:username, :email, :password)
     else
-      { username: params[:username], password: 'nope' }
+      { username: params[:username], password: "nope" }
     end
+  end
+
+  private
+
+  def set_user
+    @user = User.find_by(username: params[:username])
   end
 end

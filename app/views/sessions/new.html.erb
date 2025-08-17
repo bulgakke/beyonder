@@ -4,10 +4,6 @@
       <p class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-lg inline-block" id="alert"><%= alert %></p>
     <% end %>
 
-    <% if notice = flash[:notice] %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
-
     <div class="mb-10 text-3xl font-bold text-indigo-800">
       Type your stuff in:
     </div>
@@ -43,17 +39,17 @@
       </div>
 
       <div data-login-tabs-target="forms" class="forms sign-in-tab">
-        <%= turbo_frame_tag "sign-up-form", class: "form sign-up-form hidden" do %>
+        <div class="form sign-up-form hidden">
           <%= render "sign_up_form" %>
-        <% end %>
+        </div>
 
-        <%= turbo_frame_tag "sign-in-form", class: "form sign-in-form" do %>
+        <div class="form sign-in-form">
           <%= render "sign_in_form" %>
-        <% end %>
+        </div>
 
-        <%= turbo_frame_tag "quick-login-form", class: "form quick-login-form hidden" do %>
+        <div class="form quick-login-form hidden">
           <%= render "quick_login_form" %>
-        <% end %>
+        </div>
       </div>
     </div>
   </div>

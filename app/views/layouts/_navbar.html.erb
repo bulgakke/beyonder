@@ -10,6 +10,12 @@
     <% end %>
   </div>
   <div class="text-white p-3 pt-4 hover:text-black hover:bg-emerald-300 transition-all duration-300 mr-10">
-    <%= link_to "login", new_session_path %>
+    <% if Current.user %>
+      <button>
+        <%= link_to "Log Out", session_path, data: { turbo_method: :delete } %>
+      </button>
+    <% else %>
+      <%= link_to "login", new_session_path %>
+    <% end %>
   </div>
 </nav>
