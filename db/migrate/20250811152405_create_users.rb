@@ -8,10 +8,18 @@ class CreateUsers < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    execute <<~SQL
-      CREATE UNIQUE INDEX index_users_on_email_address
-        ON users (LOWER(email_address))
-        WHERE (email_address IS NOT NULL)
-    SQL
+    reversible do |dir|
+      dir.up do
+        execute <<~SQL
+          CREATE UNIQUE INDEX index_users_on_email_address
+            ON users (LOWER(email_address))
+            WHERE (email_address IS NOT NULL)
+        SQL
+      end
+
+      dir.down do
+        execute "DROP INDEX index_users_on_email_address"
+      end
+    end
   end
 end
