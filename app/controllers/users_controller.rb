@@ -8,9 +8,7 @@ class UsersController < ApplicationController
   end
 
   def me
-    @user = Current.user
-
-    render :show
+    redirect_to Current.user
   end
 
   def create
