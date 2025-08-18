@@ -33,6 +33,7 @@ class User < ApplicationRecord
     uniqueness: { case_sensitive: false }
 
   scope :registered, -> { where.not(email_address: nil) }
+  scope :temporary, -> { where(email_address: nil) }
 
   def self.authenticate_by_login(attributes)
     login = attributes.delete(:login)
@@ -55,7 +56,7 @@ class User < ApplicationRecord
     email_address.present?
   end
 
-  def guest?
+  def temporary?
     !registered?
   end
 end
