@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_17_213612) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_18_160549) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "posts", force: :cascade do |t|
+    t.text "body"
+    t.bigint "author_id", null: false
+    t.string "resource_type", null: false
+    t.bigint "resource_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_posts_on_author_id"
+    t.index ["resource_type", "resource_id"], name: "index_posts_on_resource"
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -34,5 +45,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_17_213612) do
     t.index "lower((username)::text)", name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "posts", "users", column: "author_id"
   add_foreign_key "sessions", "users"
 end
