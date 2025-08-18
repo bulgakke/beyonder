@@ -4,14 +4,16 @@ class User < ApplicationRecord
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
+  # Allow nil emails for temporary accounts, validate if not nil
   validates :email_address,
     presence: true,
     format: { with: URI::MailTo::EMAIL_REGEXP },
-    uniqueness: { case_sensitive: false }
+    uniqueness: { case_sensitive: false },
+    unless: -> { email_address.nil? }
 
   validates :username,
     presence: true,
-    format: { with: /\A\w+\z/ },
+    format: { with: /\A\w+\z/, message: "can only contain Latin letters, numbers and underscores" },
     uniqueness: { case_sensitive: false }
 
   scope :registered, -> { where.not(email_address: nil) }
