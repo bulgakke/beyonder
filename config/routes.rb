@@ -11,9 +11,11 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
 
-  get "users/:username", to: "users#show", as: :user
-  resources :users, only: %i[create]
+  get "me" => "users#me"
+
+  resources :users, only: %i[show create], param: :username do
+  end
 
   # Defines the root path route ("/")
-  root "sessions#new"
+  root "users#me"
 end

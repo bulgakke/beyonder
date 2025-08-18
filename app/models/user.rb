@@ -30,6 +30,7 @@ class User < ApplicationRecord
   validates :username,
     presence: true,
     format: { with: /\A\w+\z/, message: "can only contain Latin letters, numbers and underscores" },
+    length: { minimum: 3, maximum: 20 },
     uniqueness: { case_sensitive: false }
 
   scope :registered, -> { where.not(email_address: nil) }

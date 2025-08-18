@@ -7,6 +7,12 @@ class UsersController < ApplicationController
   def show
   end
 
+  def me
+    @user = Current.user
+
+    render :show
+  end
+
   def create
     @user = User.new(user_params)
 
