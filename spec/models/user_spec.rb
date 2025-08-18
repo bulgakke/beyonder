@@ -21,25 +21,17 @@ RSpec.describe User, type: :model do
     describe "validations" do
       let(:user) { User.new(params).tap(&:validate) }
 
-      context "without username and password" do
-        let(:params) { {} }
+      context "with blank username and password" do
+        let(:params) { { username: "", password: "" } }
         let(:expected_errors) do
           {
             password: ["can't be blank"],
-            username: ["can't be blank"]
+            username: ["can't be blank", "can only contain Latin letters, numbers and underscores"]
           }
         end
 
         it "cannot create user" do
           expect(user.errors.messages).to eq(expected_errors)
-        end
-
-        context "with blank username and password" do
-          let(:params) { { username: "", password: "" } }
-
-          it "cannot create user" do
-            expect(user.errors.messages).to eq(expected_errors)
-          end
         end
       end
 
