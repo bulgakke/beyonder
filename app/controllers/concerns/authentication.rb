@@ -22,11 +22,14 @@ module Authentication
     end
 
     def resume_session
-      Current.session ||= find_session_by_cookie
+      if session = find_session_by_cookie
+        session.refresh_last_login!
+        Current.session = session
+      end
     end
 
     def find_session_by_cookie
-      Session.find_by(id: cookies.signed[:session_id]) if cookies.signed[:session_id]
+      Session.not_expired.find_by(id: cookies.signed[:session_id]) if cookies.signed[:session_id]
     end
 
     def request_authentication
@@ -39,7 +42,11 @@ module Authentication
     end
 
     def start_new_session_for(user)
-      user.sessions.create!(user_agent: request.user_agent, ip_address: request.remote_ip).tap do |session|
+      user.sessions.create!(
+        user_agent: request.user_agent,
+        ip_address: request.remote_ip,
+        last_login_at: Time.current
+      ).tap do |session|
         Current.session = session
         cookies.signed.permanent[:session_id] = { value: session.id, httponly: true, same_site: :lax }
       end
