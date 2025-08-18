@@ -1,7 +1,8 @@
 <nav class="bg-gradient-to-br from-blue-500 via-indigo-500 to-violet-500 flex justify-start shadow-md shadow-neutral-400 rounded-b-md">
-  <div class="hover:bg-teal-400">
-    <%= link_to root_path do %>
-      <%= inline_svg_tag('icon.svg', class: "hover:-rotate-35 transition-all duration-300 size-15 p-1") %>
+  <div class="isolate rounded-bl-md hover:bg-teal-400">
+    <%= link_to root_path, class: "flex group items-center pr-3" do %>
+      <%= inline_svg_tag('icon.svg', class: "group-hover:-rotate-35 transition-all duration-300 size-15 p-1") %>
+      <span class="font-bold text-2xl text-white">Home</span>
     <% end %>
   </div>
   <div class="hover:bg-emerald-300 ml-auto">
@@ -9,13 +10,15 @@
       <%= image_tag('github-mark-white.svg', class: "hover:invert size-15 p-3.5") %>
     <% end %>
   </div>
-  <div class="text-white p-3 pt-4 hover:text-black hover:bg-emerald-300 transition-all duration-300 mr-10">
+  <div class="text-white mx-10">
     <% if Current.user %>
-      <button>
-        <%= link_to "Log Out", session_path, data: { turbo_method: :delete } %>
-      </button>
+        <%= button_to "logout", session_path, method: :delete,
+          class: "w-full min-w-20 flex-1 sm:w-auto text-center rounded-lg mt-2 mx-auto px-3.5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white block font-medium cursor-pointer"
+        %>
     <% else %>
-      <%= link_to "login", new_session_path %>
+      <%= button_to "login", new_session_path,
+        class: "w-full min-w-20 sm:w-auto text-center rounded-lg mt-2 mx-auto px-4.5 py-2.5 bg-teal-500 hover:bg-emerald-600 text-white block font-medium cursor-pointer"
+      %>
     <% end %>
   </div>
 </nav>
