@@ -12,13 +12,13 @@ export default class extends Controller {
     })
 
     this.element.querySelectorAll('.form').forEach(form => {
-      form.style.display = "none"
+      form.classList.add("hidden")
     })
 
     selectedTab.classList.add("active")
 
     const activeForm = this.element.querySelector(`.${tabType}-form`)
-    activeForm.style.display = "block"
+    activeForm.classList.remove("hidden")
 
     this.formsTarget.classList.remove("sign-up-tab", "sign-in-tab", "quick-login-tab")
     this.formsTarget.classList.add(`${tabType}-tab`)

@@ -1,6 +1,8 @@
-<div class="mx-auto md:w-2/3 w-full">
+<h2 class="text-lg text-white text-center pb-3">Sign in to existing account</h2>
+
+<div class="mx-auto w-full px-4">
   <%= form_with url: session_path, class: "contents text-white" do |form| %>
-    <div class="my-5">
+    <div class="my-2">
       <%= form.text_field :login,
         required: true, autofocus: true, autocomplete: "username",
         placeholder: "username or email", value: params[:login],
@@ -8,7 +10,7 @@
       %>
     </div>
 
-    <div>
+    <div class="my-2">
       <%= form.password_field :password,
         required: true, autocomplete: "current-password",
         placeholder: "password", value: params[:password],
