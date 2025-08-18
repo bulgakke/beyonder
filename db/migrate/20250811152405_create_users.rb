@@ -7,6 +7,11 @@ class CreateUsers < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
-    add_index :users, :email_address, unique: true, where: "email_address IS NOT NULL"
+
+    execute <<~SQL
+      CREATE UNIQUE INDEX index_users_on_email_address
+        ON users (LOWER(email_address))
+        WHERE (email_address IS NOT NULL)
+    SQL
   end
 end
