@@ -1,24 +1,13 @@
-# README
+### 👽 https://beyonder.lol 👽
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A training project for myself to build a full-stack Rails app, learn to frontend and check out all the features I haven't gotten a chance to work with:
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Turbo
+- Stimulus
+- ActiveRecord Search
+- ActiveRecord encryption
+- Kamal
+- SolidQueue
+- SolidCache
+- SolidCable
+- Capybara integration tests
