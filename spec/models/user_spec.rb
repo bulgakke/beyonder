@@ -26,7 +26,11 @@ RSpec.describe User, type: :model do
         let(:expected_errors) do
           {
             password: ["can't be blank"],
-            username: ["can't be blank", "can only contain Latin letters, numbers and underscores"]
+            username: [
+              "can't be blank",
+              "can only contain Latin letters, numbers and underscores",
+              "is too short (minimum is 3 characters)"
+            ]
           }
         end
 
