@@ -1,24 +1,3 @@
-# README
+### 👽 https://beyonder.lol 👽
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+A training project for myself to build a full-stack Rails 8 app and check out all the new features (Kamal, SolidCache/Queue/Cable, ActiveRecord search/encryption, etc)
