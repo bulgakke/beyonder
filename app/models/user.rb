@@ -16,6 +16,12 @@
 #
 class User < ApplicationRecord
   has_secure_password
+
+  has_one_attached :avatar, dependent: :destroy do |attachable|
+    attachable.variant :full, resize_to_limit: [500, 500]
+    attachable.variant :thumbnail, resize_to_limit: [150, 150]
+  end
+
   has_many :sessions, dependent: :destroy
   has_many :profile_posts, as: :resource, class_name: "Post", dependent: :destroy
   has_many :posts, foreign_key: :author_id, dependent: :destroy

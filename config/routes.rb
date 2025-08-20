@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   get "me" => "users#me"
 
-  resources :users, only: %i[show create], param: :username do
+  resources :users, only: %i[show create edit update], param: :username do
     resources :posts
   end
 

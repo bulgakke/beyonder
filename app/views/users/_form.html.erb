@@ -1,0 +1,22 @@
+<%= form_with(model: user, class: "contents") do |form| %>
+  <div class="my-5">
+    <%= form.label :avatar %>
+    <div class="mt-5 relative size-48" data-controller="image-preview dropzone" id="image-preview"
+      data-dropzone-image-preview-outlet="#image-preview"
+      data-action="dragover->dropzone#dragOver dragleave->dropzone#dragLeave drop->dropzone#drop">
+
+      <div class="absolute z-0 text-gray-800 bg-gray-200 opacity-50 h-8 rounded-t-2xl flex justify-center items-center inset-0">Click or drag here</div>
+      <img data-image-preview-target="canvas" class="object-cover size-48 outline-2 outline-gray-500 outline-dashed rounded-2xl">
+
+      <%= form.file_field :avatar,
+        accept: "image/*",
+        data: { action: "image-preview#show", image_preview_target: "source", dropzone_target: "input" },
+        class: "absolute inset-0 opacity-0"
+      %>
+    </div>
+  </div>
+
+  <div class="inline">
+    <%= form.submit "Update profile", class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>
