@@ -8,3 +8,23 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+.fade-slide {
+  transform: translateY(-0.5rem);
+  opacity: 0;
+}
+
+.fade-slide.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.post-transition {
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out, box-shadow 2.5s ease-out, outline-color 2.5s ease-out;
+}
+
+.new-post {
+  outline-color: var(--color-green-500);
+  box-shadow: inset 0 0 10px var(--color-emerald-500);
+  outline-width: 3px;
+}

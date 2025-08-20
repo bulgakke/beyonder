@@ -22,9 +22,23 @@ class PostsController < ApplicationController
     @post.author = Current.user
 
     if @post.save
-      redirect_to [@resource, @post], notice: "Post was successfully created."
+      respond_to do |format|
+        format.turbo_stream
+
+        format.html { redirect_to @resource, notice: "Post was successfully created." }
+      end
     else
-      render :new, status: :unprocessable_entity
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            "posts_form",
+            partial: "posts/form",
+            locals: { resource: @resource, post: @post }
+          )
+        end
+
+        format.html { redirect_back fallback_location: @resource, alert: "Something went wrong" }
+      end
     end
   end
 

@@ -1,22 +1,20 @@
-<%= form_with(model: [@resource, post], class: "contents") do |form| %>
-  <% if post.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
-      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+<turbo-frame id="posts_form">
+  <% if alert = flash[:alert] %>
+    <p class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-lg inline-block" id="alert"><%= alert %></p>
+  <% end %>
 
+  <% if post.errors.any? %>
+    <div class="bg-red-50 text-red-500 px-3 py-2 rounded mb-2">
       <ul class="list-disc ml-6">
-        <% post.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% post.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="my-5">
-    <%= form.label :body %>
-    <%= form.textarea :body, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": post.errors[:body].none?, "border-red-400 focus:outline-red-600": post.errors[:body].any?}] %>
-  </div>
-
-  <div class="inline">
-    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
-  </div>
-<% end %>
+  <%= form_with(model: [resource, post], data: { turbo_frame: "posts_form" }, class: "flex gap-2 mt-4") do |form| %>
+    <%= form.text_field :body, placeholder: "Say something...", class: "flex-1 border rounded px-3 py-2" %>
+    <%= form.submit "Post!", class: "bg-blue-600 hover:bg-blue-500 cursor-pointer text-white px-4 py-2 rounded" %>
+  <% end %>
+</turbo-frame>

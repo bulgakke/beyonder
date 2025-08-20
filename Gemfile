@@ -64,6 +64,7 @@ end
 
 group :development do
   gem "annotaterb", "~> 4.18"
+  gem "hotwire-spark"
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
   gem "ruby-lsp-rails"
