@@ -18,7 +18,7 @@ FactoryBot.define do
   factory :user do
     email_address { FFaker::Internet.email }
     password { "password" }
-    username { FFaker::Name.first_name }
+    username { FFaker::Name.first_name + "1" }
 
     trait :temporary do
       email_address { nil }

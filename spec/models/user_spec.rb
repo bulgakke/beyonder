@@ -40,7 +40,7 @@ RSpec.describe User, type: :model do
       end
 
       context "with username and password present" do
-        let(:params) { { username: "1", password: "2" } }
+        let(:params) { { username: "123", password: "2" } }
 
         it "creates user" do
           expect(user).to be_valid
