@@ -1,6 +1,11 @@
 <div id="<%= dom_id post %>" class="w-full sm:w-auto my-5 space-y-5">
-  <div>
-    <%= post.author.username %> at <%= post.created_at %> says:
+  <div class="flex ">
+    <div>
+      <%= post.author.avatar.present? ? image_tag(post.author.avatar.variant(:thumbnail).processed.url, class: "size-12 rounded-2xl") : "" %>
+    </div>
+    <div>
+      <%= post.author.username %> at <%= post.created_at %> says:
+    </div>
   </div>
   <div>
     <%= post.body %>
