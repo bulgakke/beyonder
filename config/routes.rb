@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get "me" => "users#me"
 
   resources :users, only: %i[show create], param: :username do
+    resources :posts
   end
 
   # Defines the root path route ("/")

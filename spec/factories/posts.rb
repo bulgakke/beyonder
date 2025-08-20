@@ -21,8 +21,14 @@
 #
 FactoryBot.define do
   factory :post do
-    body { FFaker::Loren.paragraph }
-    author { user }
-    resource { user }
+    body { FFaker::Lorem.paragraph }
+    author { create :user }
+    resource { create :user }
+
+    trait :invalid do
+      body { nil }
+      author { nil }
+      resource { nil }
+    end
   end
 end
