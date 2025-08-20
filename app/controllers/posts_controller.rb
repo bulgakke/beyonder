@@ -1,0 +1,62 @@
+class PostsController < ApplicationController
+  before_action :set_resource
+  before_action :set_post, only: %i[ show edit update destroy ]
+
+  def index
+    @posts = @resource.posts
+  end
+
+  def show
+  end
+
+  def new
+    @post = Post.new
+  end
+
+  def edit
+  end
+
+  def create
+    @post = Post.new(post_params)
+    @post.resource = @resource
+    @post.author = Current.user
+
+    if @post.save
+      redirect_to [@resource, @post], notice: "Post was successfully created."
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @post.update(post_params)
+      redirect_to [@resource, @post], notice: "Post was successfully updated.", status: :see_other
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @post.destroy!
+
+    redirect_to [@resource, Post], notice: "Post was successfully destroyed.", status: :see_other
+  end
+
+  private
+
+  def set_resource
+    if username = params[:user_username]
+      @resource = User.find_by!(username: username)
+    else
+      render_not_found!
+    end
+  end
+
+  def set_post
+    @post = Post.where(resource: @resource).find(params.expect(:id))
+  end
+
+  def post_params
+    params.expect(post: [:body])
+  end
+end
