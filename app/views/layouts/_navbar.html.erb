@@ -10,6 +10,13 @@
       <%= image_tag('github-mark-white.svg', class: "hover:invert size-15 p-3.5") %>
     <% end %>
   </div>
+  <div class="hover:bg-emerald-300">
+    <div class="invert">
+      <%= link_to "https://darkreader.org/" do %>
+        <%= image_tag('dark-mode.png', class: "hover:invert size-15 p-3.5") %>
+      <% end %>
+    </div>
+  </div>
   <div class="text-white mx-10">
     <% if Current.user %>
         <%= button_to "logout", session_path, method: :delete,
