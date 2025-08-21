@@ -37,7 +37,7 @@ class PostsController < ApplicationController
           )
         end
 
-        format.html { redirect_back fallback_location: @resource, alert: "Something went wrong" }
+        format.html { redirect_back fallback_location: @resource, status: :unprocessable_entity, alert: "Something went wrong" }
       end
     end
   end
