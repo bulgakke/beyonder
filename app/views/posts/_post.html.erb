@@ -1,6 +1,6 @@
 <div id="<%= dom_id post %>"
      data-controller="post-animation"
-     class="flex rounded-md w-full sm:w-auto my-3 -ml-12 p-5 space-y-5 fade-slide post-transition <%= "new-post" if local_assigns[:new_post] %> ">
+     class="flex rounded-md w-full sm:w-auto my-3 -ml-12 p-5 space-y-5 <%= "fade-slide post-transition new-post" if local_assigns[:new_post] %> ">
 
   <div class="flex-shrink-0 mr-5">
     <%= link_to user_path(post.author), data: { turbo: false } do %>
