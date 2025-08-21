@@ -26,4 +26,12 @@ class Post < ApplicationRecord
   normalizes :body, with: ->(body) { body.strip }
 
   validates :body, presence: true
+
+  after_create_commit do
+    broadcast_prepend_to turbo_stream_channel, target: "posts", partial: "posts/post", locals: { post: self, new_post: true }
+  end
+
+  def turbo_stream_channel
+    "posts_for_#{resource_type.downcase}_#{resource.id}"
+  end
 end

@@ -14,6 +14,8 @@
   <div class="min-w-full divide-y divide-gray-200 space-y-5">
     <%= render "posts/form", resource: @user, post: Post.new %>
 
+    <%= turbo_stream_from "posts_for_user_#{@user.id}" %>
+
     <% if @user.profile_posts.any? %>
       <turbo-frame id="posts">
         <%= render @user.profile_posts.order(created_at: :desc) %>
