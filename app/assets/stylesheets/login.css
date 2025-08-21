@@ -49,6 +49,14 @@
   transition: all 0.2s ease;
 }
 
+.form {
+  display: none;
+}
+
+.form.active {
+  display: block;
+}
+
 .forms {
   padding: 20px;
   border-radius: 0 0 12px 12px;
