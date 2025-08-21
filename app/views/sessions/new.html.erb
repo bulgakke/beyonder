@@ -8,14 +8,14 @@
       Type your stuff in:
     </div>
 
-    <div data-controller="login-tabs" data-login-tabs-active-tab-value="<%= params[:active_tab] %>" class="login-container m-auto">
+    <div data-controller="login-tabs" class="login-container m-auto">
       <div class="tabs">
         <div class="tab-wrapper sign-up-tab">
           <button
             data-login-tabs-target="tab"
             data-action="login-tabs#switchTab"
             data-tab="sign-up"
-            class="tab sign-up-tab">
+            class="tab sign-up-tab <%= login_tab_active?('sign-up') %>">
             Sign up </button>
         </div>
         <div class="tab-wrapper mx-1 sign-in-tab">
@@ -23,7 +23,7 @@
             data-login-tabs-target="tab"
             data-action="login-tabs#switchTab"
             data-tab="sign-in"
-            class="tab sign-in-tab">
+            class="tab sign-in-tab <%= login_tab_active?('sign-in') %>">
             Log in
           </button>
         </div>
@@ -32,23 +32,23 @@
             data-login-tabs-target="tab"
             data-action="login-tabs#switchTab"
             data-tab="quick-login"
-            class="tab quick-login-tab">
+            class="tab quick-login-tab <%= login_tab_active?('quick-login') %>">
             Guest
           </button>
         </div>
       </div>
 
-      <div data-login-tabs-target="forms" class="forms sign-in-tab">
-        <div class="form sign-up-form hidden">
+      <div data-login-tabs-target="forms" class="forms <%= params[:active_tab] || "sign-in" %>-tab">
+        <div class="form sign-up-form <%= login_tab_active?('sign-up') %>">
           <%# This view is called in users#create, so prepend sessions/ explicitly %>
           <%= render "sessions/sign_up_form" %>
         </div>
 
-        <div class="form sign-in-form">
+        <div class="form sign-in-form <%= login_tab_active?('sign-in') %>">
           <%= render "sessions/sign_in_form" %>
         </div>
 
-        <div class="form quick-login-form hidden">
+        <div class="form quick-login-form <%= login_tab_active?('quick-login') %>">
           <%= render "sessions/quick_login_form" %>
         </div>
       </div>
