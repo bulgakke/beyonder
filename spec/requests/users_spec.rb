@@ -79,7 +79,7 @@ RSpec.describe "Users", type: :request do
 
       xit "renders a response with 422 status" do
         patch user_url(user), params: { user: new_attributes }
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(user.avatar.attached?).to be false
       end
     end
