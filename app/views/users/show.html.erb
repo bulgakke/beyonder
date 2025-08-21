@@ -1,4 +1,4 @@
-<%= show_image(@user.avatar, :full, class: "size-48 rounded-2xl") %>
+<%= show_image(@user.avatar, :full, class: "size-48 rounded-2xl mr-20") %>
 
 <div class="mx-auto md:w-2/3 w-full">
   <div class="flex justify-between">
@@ -16,12 +16,12 @@
 
     <%= turbo_stream_from "posts_for_user_#{@user.id}" %>
 
-    <% if @user.profile_posts.any? %>
-      <turbo-frame id="posts">
-        <%= render @user.profile_posts.order(created_at: :desc) %>
-      </turbo-frame>
-    <% else %>
-      <p class="text-center my-10">Nothing here...</p>
-    <% end%>
+    <turbo-frame id="posts">
+      <% if @user.profile_posts.any? %>
+          <%= render @user.profile_posts.order(created_at: :desc) %>
+      <% else %>
+        <p id="no-posts-placeholder" class="text-center my-10">Nothing here...</p>
+      <% end%>
+    </turbo-frame>
   </div>
 </div>

@@ -1,3 +1,4 @@
 <%= turbo_stream.prepend "posts", partial: "posts/post", locals: { post: @post, new_post: true } %>
+<%= turbo_stream.remove "no-posts-placeholder" %>
 
 <%= turbo_stream.replace "posts_form", partial: "posts/form", locals: { resource: @resource, post: Post.new } %>

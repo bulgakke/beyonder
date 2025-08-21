@@ -1,17 +1,31 @@
 <div id="<%= dom_id post %>"
      data-controller="post-animation"
-     class="rounded-md w-full sm:w-auto my-5 p-5 space-y-5 fade-slide post-transition <%= "new-post" if local_assigns[:new_post] %> ">
-  <div class="flex">
-    <div>
-      <%= link_to user_path(post.author), data: { turbo: false } do %>
-        <%= show_image(post.author.avatar, :thumbnail, class: "hover:scale-105 size-12 rounded-2xl") %>
-      <% end %>
-    </div>
-    <div>
-      <%= post.author.username %> at <%= post.created_at %> says:
-    </div>
+     class="flex rounded-md w-full sm:w-auto my-3 -ml-12 p-5 space-y-5 fade-slide post-transition <%= "new-post" if local_assigns[:new_post] %> ">
+
+  <div class="flex-shrink-0 mr-5">
+    <%= link_to user_path(post.author), data: { turbo: false } do %>
+      <%= show_image(post.author.avatar, :thumbnail, class: "hover:scale-105 size-12 shadow-sm rounded-md") %>
+    <% end %>
   </div>
-  <div>
-    <%= post.body %>
+
+  <div class="flex-1">
+    <div class="flex items-center justify-between">
+      <div class="font-semibold text-gray-800 hover:text-gray-700 hover:bg-gray-100 rounded-md px-2 -ml-3 transition duration-100 ease-in">
+        <%= link_to user_path(post.author), data: { turbo: false } do %>
+          <%= post.author.username %>
+        <% end %>
+      </div>
+      <div class="text-sm text-gray-500">
+        <time
+          data-controller="local-time"
+          data-local-time-target="time"
+          data-datetime="<%= post.created_at.iso8601 %>">
+          <%= post.created_at.iso8601 %>
+        </time>
+      </div>
+    </div>
+    <div class="mt-2 text-gray-700 leading-relaxed">
+      <%= post.body %>
+    </div>
   </div>
 </div>

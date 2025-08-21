@@ -15,6 +15,8 @@
 #  index_users_on_username       (lower((username)::text)) UNIQUE
 #
 class User < ApplicationRecord
+  include ConvenienceMethods
+
   has_secure_password
 
   has_one_attached :avatar, dependent: :destroy do |attachable|
