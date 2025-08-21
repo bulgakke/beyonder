@@ -23,5 +23,9 @@ FactoryBot.define do
     trait :temporary do
       email_address { nil }
     end
+
+    trait :with_avatar do
+      avatar { fixture_file_upload('image.png') }
+    end
   end
 end

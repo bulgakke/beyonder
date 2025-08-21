@@ -89,14 +89,14 @@ RSpec.describe "/posts", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { body: 'new body' }
       }
 
       it "updates the requested post" do
         post = Post.create! valid_attributes
         patch user_post_url(user, post), params: { post: new_attributes }
         post.reload
-        skip("Add assertions for updated state")
+        expect(post.body).to eq('new body')
       end
 
       it "redirects to the post" do

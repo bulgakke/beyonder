@@ -34,6 +34,13 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
+
+FactoryBot::SyntaxRunner.class_eval do |config|
+  include ActionDispatch::TestProcess
+  include ActiveSupport::Testing::FileFixtures
+  config.file_fixture_path = Rails.root.join('spec/fixtures').to_s
+end
+
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
