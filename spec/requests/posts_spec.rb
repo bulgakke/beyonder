@@ -16,7 +16,7 @@ RSpec.describe "/posts", type: :request do
   let(:user) { create(:user) }
 
   let(:valid_attributes) {
-    attributes_for(:post).merge(resource: user)
+    attributes_for(:post).merge(author: user, resource: user)
   }
 
   let(:invalid_attributes) {
