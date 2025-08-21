@@ -1,0 +1,98 @@
+# == Schema Information
+#
+# Table name: tic_tac_toe_games
+#
+#  id          :bigint           not null, primary key
+#  board       :jsonb            not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  o_player_id :bigint           not null
+#  x_player_id :bigint           not null
+#
+# Indexes
+#
+#  index_tic_tac_toe_games_on_o_player_id  (o_player_id)
+#  index_tic_tac_toe_games_on_x_player_id  (x_player_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (o_player_id => users.id)
+#  fk_rails_...  (x_player_id => users.id)
+#
+module TicTacToe
+  class Game < ApplicationRecord
+    belongs_to :x_player, class_name: "User"
+    belongs_to :o_player, class_name: "User"
+
+    has_many :moves
+
+    validate :players_are_not_the_same
+
+    def puts_board
+      puts board.map { |row| row.map { |cell| cell || " " }.join("|") }.join("\n")
+    end
+
+    def full?
+      board.all? { |row| row.all? { |cell| cell.present? } } && moves.count == 9
+    end
+
+    def ended?
+      !!winner || full?
+    end
+
+    def rows
+      board
+    end
+
+    def columns
+      board.transpose
+    end
+
+    def diagonals
+      [
+        [board[0][0], board[1][1], board[2][2]],
+        [board[0][2], board[1][1], board[2][0]]
+      ]
+    end
+
+    def winner
+      (rows + columns + diagonals).each do |line|
+        return x_player if line.all?("x")
+        return o_player if line.all?("o")
+      end
+
+      nil
+    end
+
+    def make_move(player, row, column)
+      return false unless validate_move(player, row, column)
+
+      symbol = player == x_player ? :x : :o
+
+      transaction do
+        moves.create!(row: row, column: column, player: player, symbol: symbol)
+        board[row][column] = symbol
+
+        save!
+      end
+    rescue ActiveRecord::RecordInvalid
+      false
+    end
+
+    private
+
+    def validate_move(player, row, column)
+      errors.add(:base, "Invalid move") if board[row][column].present?
+      errors.add(:base, "Invalid player") if player != x_player && player != o_player
+      errors.add(:base, "Can't move two times in a row") if moves.last&.player == player
+
+      errors.blank?
+    end
+
+    def players_are_not_the_same
+      if x_player == o_player
+        errors.add(:base, "Players cannot be the same")
+      end
+    end
+  end
+end
