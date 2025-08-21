@@ -4,6 +4,8 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update]
   before_action :set_active_login_screen_tab, only: %i[create]
 
+  skip_after_action :verify_authorized, only: %i[me create]
+
   def show
   end
 
@@ -29,7 +31,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to @user, notice: "User was successfully updated."
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -63,5 +65,7 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find_by!(username: params[:username])
+
+    authorize @user
   end
 end
