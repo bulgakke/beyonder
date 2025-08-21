@@ -4,6 +4,7 @@ class PostsController < ApplicationController
 
   def index
     @posts = @resource.posts
+    authorize @posts
   end
 
   def show
@@ -11,6 +12,8 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+
+    authorize @post
   end
 
   def edit
@@ -20,6 +23,8 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.resource = @resource
     @post.author = Current.user
+
+    authorize @post
 
     if @post.save
       respond_to do |format|
@@ -68,6 +73,7 @@ class PostsController < ApplicationController
 
   def set_post
     @post = Post.where(resource: @resource).find(params.expect(:id))
+    authorize @post
   end
 
   def post_params

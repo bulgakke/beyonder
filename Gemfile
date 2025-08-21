@@ -77,3 +77,4 @@ group :test do
 end
 
 gem "inline_svg"
+gem "pundit"

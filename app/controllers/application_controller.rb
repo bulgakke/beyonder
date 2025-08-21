@@ -1,8 +1,12 @@
 class ApplicationController < ActionController::Base
-  include Authentication
-  include ActiveStorage::SetCurrent
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
+
+  include ActiveStorage::SetCurrent
+
+  include Authentication
+  include Pundit::Authorization
+  after_action :verify_authorized
 
   rescue_from ActiveRecord::RecordNotFound do
     render_not_found!
@@ -10,5 +14,10 @@ class ApplicationController < ActionController::Base
 
   def render_not_found!
     render file: "public/404.html", status: :not_found
+  end
+
+  # Pundit calls current_user in `authorize`
+  def current_user
+    Current.user
   end
 end
