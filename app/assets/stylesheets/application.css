@@ -20,7 +20,7 @@
 }
 
 .post-transition {
-  transition: transform 0.3s ease-out, opacity 0.3s ease-out, box-shadow 2.5s ease-out, outline-color 2.5s ease-out;
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out, box-shadow 2.5s ease-out, outline-color 2.5s ease-out;
 }
 
 .new-post {
