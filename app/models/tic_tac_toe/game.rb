@@ -6,8 +6,8 @@
 #  board       :jsonb            not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  o_player_id :bigint           not null
-#  x_player_id :bigint           not null
+#  o_player_id :bigint
+#  x_player_id :bigint
 #
 # Indexes
 #
@@ -21,8 +21,8 @@
 #
 module TicTacToe
   class Game < ApplicationRecord
-    belongs_to :x_player, class_name: "User"
-    belongs_to :o_player, class_name: "User"
+    belongs_to :x_player, class_name: "User", optional: true
+    belongs_to :o_player, class_name: "User", optional: true
 
     has_many :moves
 

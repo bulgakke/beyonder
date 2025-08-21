@@ -6,8 +6,8 @@
 #  board       :jsonb            not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  o_player_id :bigint           not null
-#  x_player_id :bigint           not null
+#  o_player_id :bigint
+#  x_player_id :bigint
 #
 # Indexes
 #

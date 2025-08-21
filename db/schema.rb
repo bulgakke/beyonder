@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_21_185823) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_21_220346) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -68,8 +68,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_21_185823) do
   end
 
   create_table "tic_tac_toe_games", force: :cascade do |t|
-    t.bigint "x_player_id", null: false
-    t.bigint "o_player_id", null: false
+    t.bigint "x_player_id"
+    t.bigint "o_player_id"
     t.jsonb "board", default: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]], null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
