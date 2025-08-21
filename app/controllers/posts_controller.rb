@@ -42,7 +42,7 @@ class PostsController < ApplicationController
           )
         end
 
-        format.html { redirect_back fallback_location: @resource, status: :unprocessable_entity, alert: "Something went wrong" }
+        format.html { redirect_back fallback_location: @resource, status: :unprocessable_content, alert: "Something went wrong" }
       end
     end
   end
@@ -51,7 +51,7 @@ class PostsController < ApplicationController
     if @post.update(post_params)
       redirect_to [@resource, @post], notice: "Post was successfully updated.", status: :see_other
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
