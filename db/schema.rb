@@ -16,6 +16,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_21_220346) do
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "tic_tac_toe_game_status", ["pending", "ongoing", "finished"]
   create_enum "tic_tac_toe_symbol", ["x", "o"]
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -73,6 +74,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_21_220346) do
     t.jsonb "board", default: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]], null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.enum "status", default: "pending", null: false, enum_type: "tic_tac_toe_game_status"
     t.index ["o_player_id"], name: "index_tic_tac_toe_games_on_o_player_id"
     t.index ["x_player_id"], name: "index_tic_tac_toe_games_on_x_player_id"
   end

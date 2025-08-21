@@ -4,6 +4,7 @@
 #
 #  id          :bigint           not null, primary key
 #  board       :jsonb            not null
+#  status      :enum             default("pending"), not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  o_player_id :bigint
@@ -23,5 +24,33 @@ FactoryBot.define do
   factory :tic_tac_toe_game, class: 'TicTacToe::Game' do
     x_player { nil }
     o_player { nil }
+    status { :pending }
+
+    trait :with_full_board do
+      x_player { create(:user) }
+      o_player { create(:user) }
+
+      board do
+        [
+          ["x", "o", "x"],
+          ["o", "x", "o"],
+          ["x", "o", "x"]
+        ]
+      end
+
+      moves do
+        TicTacToe::Move.build [
+          { row: 0, column: 0, player: x_player, symbol: :x },
+          { row: 0, column: 1, player: o_player, symbol: :o },
+          { row: 0, column: 2, player: x_player, symbol: :x },
+          { row: 1, column: 0, player: o_player, symbol: :o },
+          { row: 1, column: 1, player: x_player, symbol: :x },
+          { row: 1, column: 2, player: o_player, symbol: :o },
+          { row: 2, column: 0, player: x_player, symbol: :x },
+          { row: 2, column: 1, player: o_player, symbol: :o },
+          { row: 2, column: 2, player: x_player, symbol: :x }
+        ]
+      end
+    end
   end
 end
