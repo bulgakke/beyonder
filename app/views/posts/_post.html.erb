@@ -3,7 +3,7 @@
      class="rounded-md w-full sm:w-auto my-5 p-5 space-y-5 fade-slide post-transition <%= "new-post" if local_assigns[:new_post] %> ">
   <div class="flex">
     <div>
-      <%= post.author.avatar.present? ? image_tag(post.author.avatar.variant(:thumbnail).processed.url, class: "size-12 rounded-2xl") : "" %>
+      <%= show_image(post.author.avatar, :thumbnail, class: "size-12 rounded-2xl") %>
     </div>
     <div>
       <%= post.author.username %> at <%= post.created_at %> says:
