@@ -10,9 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_20_150326) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_21_185823) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "tic_tac_toe_symbol", ["x", "o"]
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -63,6 +67,28 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_20_150326) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "tic_tac_toe_games", force: :cascade do |t|
+    t.bigint "x_player_id", null: false
+    t.bigint "o_player_id", null: false
+    t.jsonb "board", default: [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]], null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["o_player_id"], name: "index_tic_tac_toe_games_on_o_player_id"
+    t.index ["x_player_id"], name: "index_tic_tac_toe_games_on_x_player_id"
+  end
+
+  create_table "tic_tac_toe_moves", force: :cascade do |t|
+    t.bigint "player_id", null: false
+    t.bigint "game_id", null: false
+    t.integer "row", null: false
+    t.integer "column", null: false
+    t.enum "symbol", null: false, enum_type: "tic_tac_toe_symbol"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_tic_tac_toe_moves_on_game_id"
+    t.index ["player_id"], name: "index_tic_tac_toe_moves_on_player_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email_address"
     t.string "password_digest", null: false
@@ -77,4 +103,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_20_150326) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "posts", "users", column: "author_id"
   add_foreign_key "sessions", "users"
+  add_foreign_key "tic_tac_toe_games", "users", column: "o_player_id"
+  add_foreign_key "tic_tac_toe_games", "users", column: "x_player_id"
+  add_foreign_key "tic_tac_toe_moves", "tic_tac_toe_games", column: "game_id"
+  add_foreign_key "tic_tac_toe_moves", "users", column: "player_id"
 end
