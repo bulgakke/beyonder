@@ -1,4 +1,4 @@
-<%= @user.avatar.present? ? image_tag(@user.avatar.variant(:full).processed.url, class: "size-48 rounded-2xl") : "" %>
+<%= show_image(@user.avatar, :full, class: "size-48 rounded-2xl") %>
 
 <div class="mx-auto md:w-2/3 w-full">
   <div class="flex justify-between">
