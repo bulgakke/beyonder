@@ -4,6 +4,7 @@
 #
 #  id          :bigint           not null, primary key
 #  board       :jsonb            not null
+#  status      :enum             default("pending"), not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  o_player_id :bigint
@@ -24,6 +25,81 @@ require 'rails_helper'
 RSpec.describe TicTacToe::Game, type: :model do
   let(:x_player) { create(:user) }
   let(:o_player) { create(:user) }
+
+  describe "AASM" do
+    let(:game) { create(:tic_tac_toe_game, x_player:, o_player:) }
+
+    shared_examples "an invalid transition" do |action|
+      it "does not #{action} the game" do
+        expect(game.public_send("may_#{action}?")).to be false
+        expect { game.public_send(action) }.to raise_error(AASM::InvalidTransition)
+      end
+    end
+
+    it "starts as pending" do
+      expect(game.status).to eq "pending"
+    end
+
+    describe "#start!" do
+      context "when both players are present" do
+        it "starts the game" do
+          game.start!
+          expect(game.status).to eq "ongoing"
+        end
+      end
+
+      context "when both players are not present" do
+        let(:x_player) { nil }
+
+        it_behaves_like "an invalid transition", "start"
+      end
+
+      context "when game is ongoing" do
+        before { game.start! }
+
+        it_behaves_like "an invalid transition", "start"
+      end
+
+      context "when game is finished" do
+        let(:game) { create(:tic_tac_toe_game, :with_full_board, status: :finished) }
+
+        it_behaves_like "an invalid transition", "start"
+      end
+    end
+
+    describe "#finish!" do
+      let(:game) { create(:tic_tac_toe_game, :with_full_board, status:) }
+
+      context "when game is ongoing" do
+        let(:status) { :ongoing }
+
+        context "when board is full or there is a winner" do
+          it "finishes the game" do
+            game.finish!
+            expect(game.status).to eq "finished"
+          end
+        end
+
+        context "when board is not full and there is no winner" do
+          let(:game) { create(:tic_tac_toe_game, status:) }
+
+          it_behaves_like "an invalid transition", "finish"
+        end
+      end
+
+      context "when game is finished" do
+        let(:status) { :finished }
+
+        it_behaves_like "an invalid transition", "finish"
+      end
+
+      context "when game is pending" do
+        let(:status) { :pending }
+
+        it_behaves_like "an invalid transition", "finish"
+      end
+    end
+  end
 
   describe "#make_move" do
     shared_examples "an invalid move" do
@@ -51,12 +127,30 @@ RSpec.describe TicTacToe::Game, type: :model do
 
     let(:game) do
       create(:tic_tac_toe_game, x_player:, o_player:).tap do |g|
+        g.start!
         g.make_move(x_player, 0, 0)
       end
     end
 
     context "when move is valid" do
       subject(:make_move) { game.make_move(o_player, 1, 1) }
+
+      context "when game is not ongoing" do
+        let(:game) { create(:tic_tac_toe_game, x_player:, o_player:, status:) }
+        let(:expected_error) { "Game must be ongoing" }
+
+        context "when game is pending" do
+          let(:status) { :pending }
+
+          it_behaves_like "an invalid move"
+        end
+
+        context "when game is finished" do
+          let(:status) { :finished }
+
+          it_behaves_like "an invalid move"
+        end
+      end
 
       it "returns true" do
         expect(make_move).to be true
@@ -119,7 +213,7 @@ RSpec.describe TicTacToe::Game, type: :model do
   end
 
   describe "game process" do
-    let(:game) { create(:tic_tac_toe_game, x_player:, o_player:) }
+    let(:game) { create(:tic_tac_toe_game, x_player:, o_player:).tap { it.start } }
 
     it "example 1" do
       game.make_move(x_player, 0, 0)

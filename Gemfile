@@ -76,5 +76,6 @@ group :test do
   gem "selenium-webdriver"
 end
 
+gem "aasm"
 gem "inline_svg"
 gem "pundit"

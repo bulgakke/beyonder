@@ -4,6 +4,7 @@
 #
 #  id          :bigint           not null, primary key
 #  board       :jsonb            not null
+#  status      :enum             default("pending"), not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  o_player_id :bigint
@@ -21,12 +22,32 @@
 #
 module TicTacToe
   class Game < ApplicationRecord
+    include AASM
+
     belongs_to :x_player, class_name: "User", optional: true
     belongs_to :o_player, class_name: "User", optional: true
 
     has_many :moves
 
+    aasm column: :status do
+      state :pending, initial: true
+      state :ongoing
+      state :finished
+
+      event :start do
+        transitions from: :pending, to: :ongoing, guard: :both_players_present?
+      end
+
+      event :finish do
+        transitions from: :ongoing, to: :finished, guard: :ended?
+      end
+    end
+
     validate :players_are_not_the_same
+
+    def both_players_present?
+      x_player.present? && o_player.present?
+    end
 
     def puts_board
       puts board.map { |row| row.map { |cell| cell || " " }.join("|") }.join("\n")
@@ -82,6 +103,7 @@ module TicTacToe
     private
 
     def validate_move(player, row, column)
+      errors.add(:base, "Game must be ongoing") unless ongoing?
       errors.add(:base, "Invalid move") if board[row][column].present?
       errors.add(:base, "Invalid player") if player != x_player && player != o_player
       errors.add(:base, "Can't move two times in a row") if moves.last&.player == player
@@ -90,7 +112,7 @@ module TicTacToe
     end
 
     def players_are_not_the_same
-      if x_player == o_player
+      if x_player.present? && x_player == o_player
         errors.add(:base, "Players cannot be the same")
       end
     end
