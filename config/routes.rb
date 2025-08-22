@@ -16,4 +16,12 @@ Rails.application.routes.draw do
   resources :users, only: %i[show create edit update], param: :username do
     resources :posts
   end
+
+  scope "/games" do
+    namespace :tic_tac_toe do
+      resources :games, only: [:index, :show, :create], path: "" do
+        post :make_move, on: :member
+      end
+    end
+  end
 end
