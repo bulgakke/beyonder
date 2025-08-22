@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_21_220116) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_22_210723) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -47,6 +47,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_21_220116) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "lobby_participations", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "lobby_type", null: false
+    t.bigint "lobby_id", null: false
+    t.boolean "ready", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lobby_type", "lobby_id"], name: "index_lobby_participations_on_lobby"
+    t.index ["user_id", "lobby_id", "lobby_type"], name: "idx_on_user_id_lobby_id_lobby_type_3f6e8c8406", unique: true
+    t.index ["user_id"], name: "index_lobby_participations_on_user_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.text "body"
     t.bigint "author_id", null: false
@@ -75,8 +87,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_21_220116) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.enum "status", default: "pending", null: false, enum_type: "tic_tac_toe_game_status"
+    t.bigint "lobby_id", null: false
+    t.index ["lobby_id"], name: "index_tic_tac_toe_games_on_lobby_id"
     t.index ["o_player_id"], name: "index_tic_tac_toe_games_on_o_player_id"
     t.index ["x_player_id"], name: "index_tic_tac_toe_games_on_x_player_id"
+  end
+
+  create_table "tic_tac_toe_lobbies", force: :cascade do |t|
+    t.text "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tic_tac_toe_moves", force: :cascade do |t|
@@ -103,8 +123,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_21_220116) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "lobby_participations", "users"
   add_foreign_key "posts", "users", column: "author_id"
   add_foreign_key "sessions", "users"
+  add_foreign_key "tic_tac_toe_games", "tic_tac_toe_lobbies", column: "lobby_id"
   add_foreign_key "tic_tac_toe_games", "users", column: "o_player_id"
   add_foreign_key "tic_tac_toe_games", "users", column: "x_player_id"
   add_foreign_key "tic_tac_toe_moves", "tic_tac_toe_games", column: "game_id"

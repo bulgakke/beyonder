@@ -19,7 +19,15 @@ Rails.application.routes.draw do
 
   scope "/games" do
     namespace :tic_tac_toe do
-      resources :games, only: [:index, :show, :create], path: "" do
+      resources :lobbies, only: [:index, :show, :create] do
+        member do
+          post :join
+          post :leave
+          post :start
+        end
+      end
+
+      resources :games, only: [:show], path: "" do
         post :make_move, on: :member
       end
     end
