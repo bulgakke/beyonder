@@ -7,8 +7,8 @@
 #  status      :enum             default("pending"), not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  o_player_id :bigint
-#  x_player_id :bigint
+#  o_player_id :bigint           not null
+#  x_player_id :bigint           not null
 #
 # Indexes
 #
