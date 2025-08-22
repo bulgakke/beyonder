@@ -7,16 +7,19 @@
 #  status      :enum             default("pending"), not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  lobby_id    :bigint           not null
 #  o_player_id :bigint           not null
 #  x_player_id :bigint           not null
 #
 # Indexes
 #
+#  index_tic_tac_toe_games_on_lobby_id     (lobby_id)
 #  index_tic_tac_toe_games_on_o_player_id  (o_player_id)
 #  index_tic_tac_toe_games_on_x_player_id  (x_player_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (lobby_id => tic_tac_toe_lobbies.id)
 #  fk_rails_...  (o_player_id => users.id)
 #  fk_rails_...  (x_player_id => users.id)
 #
