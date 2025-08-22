@@ -1,0 +1,37 @@
+<div class="flex flex-col">
+  <h1 class="text-2xl font-bold mb-4"><%= @lobby.title || "Lobby ##{@lobby.id}" %></h1>
+
+  <p class="mb-2 font-semibold">
+    Players (<%= @lobby.users.count %>/<%= @lobby.max_players %>):
+  </p>
+  <ul class="mb-4 list-disc list-inside">
+    <% @lobby.users.each do |player| %>
+      <li><%= player.username %></li>
+    <% end %>
+  </ul>
+
+  <div class="space-x-2 mb-4">
+    <% if @lobby.users.include?(Current.user) %>
+      <%= button_to "Leave", leave_tic_tac_toe_lobby_path(@lobby),
+          method: :post,
+          data: { turbo_frame: "lobby_#{@lobby.id}" },
+          class: "bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded" %>
+    <% elsif !@lobby.full? %>
+      <%= button_to "Join", join_tic_tac_toe_lobby_path(@lobby),
+          method: :post,
+          data: { turbo_frame: "lobby_#{@lobby.id}" },
+          class: "bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded" %>
+    <% end %>
+
+    <% if @lobby.full? && @lobby.users.include?(Current.user) %>
+      <%= button_to "Ready", start_tic_tac_toe_lobby_path(@lobby),
+          method: :post,
+          data: { turbo_frame: "lobby_#{@lobby.id}" },
+          class: "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded" %>
+    <% end %>
+  </div>
+
+  <%= turbo_frame_tag "lobby_#{@lobby.id}" do %>
+    <!-- TODO -->
+  <% end %>
+</div>
