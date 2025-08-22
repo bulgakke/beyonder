@@ -3,6 +3,9 @@ module TicTacToe
     before_action :set_lobby, only: %i[show join leave start]
 
     def index
+      @lobbies = policy_scope(Lobby)
+
+      render "lobbies/index"
     end
 
     def show

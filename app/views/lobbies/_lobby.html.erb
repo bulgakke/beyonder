@@ -1,0 +1,20 @@
+<tr id="lobby_<%= lobby.id %>" class="border-b border-gray-200">
+  <td class="px-4 py-2 text-center"><%= lobby.title %></td>
+  <td class="px-4 py-2 text-center"><%= lobby.users.count %> / <%= lobby.max_players %></td>
+  <td class="px-4 py-2 text-center"><%= lobby.status %></td>
+  <td class="px-4 py-2 space-x-2 flex justify-center">
+    <% if lobby.users.include?(Current.user) %>
+      <%= link_to "Leave", leave_tic_tac_toe_lobby_path(lobby),
+          data: { turbo_method: :post, turbo_frame: "lobbies" },
+          class: "bg-yellow-400 hover:bg-yellow-500 text-white px-2 py-1 rounded" %>
+    <% elsif !lobby.full? %>
+      <%= link_to "Join", join_tic_tac_toe_lobby_path(lobby),
+          data: { turbo_method: :post, turbo_frame: "lobbies" },
+          class: "bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded" %>
+    <% end %>
+
+    <%= link_to "Show", tic_tac_toe_lobby_path(lobby),
+        data: { turbo: false },
+        class: "bg-gray-300 hover:bg-gray-400 text-black px-2 py-1 rounded" %>
+  </td>
+</tr>
