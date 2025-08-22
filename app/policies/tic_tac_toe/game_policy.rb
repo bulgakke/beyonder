@@ -1,5 +1,11 @@
 module TicTacToe
   class GamePolicy < ApplicationPolicy
+    class Scope < ApplicationPolicy::Scope
+      def resolve
+        scope.pending
+      end
+    end
+
     def index?
       true
     end

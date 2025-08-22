@@ -6,7 +6,15 @@ class ApplicationController < ActionController::Base
 
   include Authentication
   include Pundit::Authorization
-  after_action :verify_authorized
+  after_action :verify_pundit_authorization
+
+  def verify_pundit_authorization
+    if action_name == "index"
+      verify_policy_scoped
+    else
+      verify_authorized
+    end
+  end
 
   rescue_from ActiveRecord::RecordNotFound do
     render_not_found!

@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update]
   before_action :set_active_login_screen_tab, only: %i[create]
 
-  skip_after_action :verify_authorized, only: %i[me create]
+  skip_after_action :verify_pundit_authorization, only: %i[me create]
 
   def show
   end

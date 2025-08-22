@@ -3,8 +3,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
 
   def index
-    @posts = @resource.posts
-    authorize @posts
+    @posts = policy_scope @resource.posts
   end
 
   def show
