@@ -27,7 +27,7 @@ module TicTacToe
     belongs_to :x_player, class_name: "User", optional: true
     belongs_to :o_player, class_name: "User", optional: true
 
-    has_many :moves
+    has_many :moves, dependent: :destroy
 
     aasm column: :status do
       state :pending, initial: true
