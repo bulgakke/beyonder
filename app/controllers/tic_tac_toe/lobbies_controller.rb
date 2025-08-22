@@ -9,6 +9,7 @@ module TicTacToe
     end
 
     def show
+      render "lobbies/show"
     end
 
     def create
@@ -27,6 +28,8 @@ module TicTacToe
 
     def set_lobby
       @lobby = Lobby.find(params[:id])
+
+      authorize @lobby
     end
   end
 end
