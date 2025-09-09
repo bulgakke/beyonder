@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "lobby_#{lobby.id}" do %>
+  <%= render "lobbies/lobby", lobby: lobby %>
+<% end %>
+
+<%= turbo_stream.replace "lobby_row_#{lobby.id}" do %>
+  <%= render "lobbies/lobby_row", lobby: lobby %>
+<% end %>
