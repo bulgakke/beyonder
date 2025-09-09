@@ -28,6 +28,7 @@ FactoryBot.define do
     x_player { nil }
     o_player { nil }
     status { :pending }
+    lobby { build(:tic_tac_toe_lobby) }
 
     trait :with_full_board do
       x_player { create(:user) }
