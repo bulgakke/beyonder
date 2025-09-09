@@ -51,12 +51,6 @@ RSpec.describe TicTacToe::Game, type: :model do
         end
       end
 
-      context "when both players are not present" do
-        let(:x_player) { nil }
-
-        it_behaves_like "an invalid transition", "start"
-      end
-
       context "when game is ongoing" do
         before { game.start! }
 
@@ -84,7 +78,7 @@ RSpec.describe TicTacToe::Game, type: :model do
         end
 
         context "when board is not full and there is no winner" do
-          let(:game) { create(:tic_tac_toe_game, status:) }
+          let(:game) { create(:tic_tac_toe_game, status:, x_player:, o_player:) }
 
           it_behaves_like "an invalid transition", "finish"
         end

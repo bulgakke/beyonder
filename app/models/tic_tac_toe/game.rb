@@ -28,8 +28,8 @@ module TicTacToe
     include AASM
 
     belongs_to :lobby
-    belongs_to :x_player, class_name: "User", optional: true
-    belongs_to :o_player, class_name: "User", optional: true
+    belongs_to :x_player, class_name: "User"
+    belongs_to :o_player, class_name: "User"
 
     has_many :moves, dependent: :destroy
 
