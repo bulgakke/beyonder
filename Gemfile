@@ -63,7 +63,7 @@ group :development, :test do
 end
 
 group :development do
-  gem "annotaterb", "~> 4.18"
+  gem "annotaterb", "~> 4.20"
   gem "hotwire-spark"
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
